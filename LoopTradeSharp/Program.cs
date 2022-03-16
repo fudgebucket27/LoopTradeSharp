@@ -40,7 +40,8 @@ NftOrder nftOrder = new NftOrder()
     buyToken = new BuyToken
     {
         tokenId = 1,
-        amount = "10000000000000"
+        amount = "10000000000000",
+        nftData = nftData
     },
     allOrNone = false,
     fillAmountBOrS = false,
@@ -66,7 +67,7 @@ BigInteger[] poseidonInputs =
     (BigInteger) nftOrder.validUntil,
     (BigInteger) nftOrder.maxFeeBips,
     (BigInteger) fillAmountBOrSValue,
-    BigInteger.Parse("0")
+    Utils.ParseHexUnsigned("0x0000000000000000000000000000000000000000")
 };
 
 //Generate the poseidon hash
