@@ -16,6 +16,9 @@ Settings settings = config.GetRequiredSection("Settings").Get<Settings>();
 int tokenId = 33032; //tokenId to trade
 string nftData = "0x013a4a886f3de035bd82666c043abc90d1ce1b353463b32f3aa3a20aca21ec59"; //nftData to trade
 
+int tokenId2 = 32794; //tokenId to trade
+string nftData2 = "0x00fed22012e524652211a522836e2e872066da7405192321088615bc116550ef"; //nftData to trade
+
 #endregion
 
 #region Get storage ids
@@ -41,8 +44,8 @@ NftOrder nftMakerOrder = new NftOrder()
     },
     buyToken = new BuyToken
     {
-        tokenId = tokenId,
-        nftData = nftData,
+        tokenId = tokenId2,
+        nftData = nftData2,
         amount = "1"
     },
     allOrNone = false,
@@ -91,8 +94,8 @@ NftOrder nftTakerOrder = new NftOrder()
     storageId = storageId2.orderId,
     sellToken = new SellToken
     {
-        tokenId = tokenId,
-        nftData = nftData,
+        tokenId = tokenId2,
+        nftData = nftData2,
         amount = "1"
     },
     buyToken = new BuyToken
