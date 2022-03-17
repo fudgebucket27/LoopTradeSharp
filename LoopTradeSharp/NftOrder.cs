@@ -11,13 +11,18 @@ namespace LoopTradeSharp
         public string exchange { get; set; }
         public int accountId { get; set; }
         public int storageId { get; set; }
-        public SellToken sellToken { get; set; }
-        public BuyToken buyToken { get; set; }
         public bool allOrNone { get; set; }
         public bool fillAmountBOrS { get; set; }
         public long validUntil { get; set; }
         public int maxFeeBips { get; set; }
-        public string taker { get; set; }
+        public string eddsaSignature { get; set; }
+        public string clientOrderId { get; set; } = "";
+        public string orderType { get; set; } = "";
+        public string tradeChannel { get; set; } = "";
+        public string taker { get; set; } = "";
+        public string affiliate { get; set; } = "";
+        public SellToken sellToken { get; set; }
+        public BuyToken buyToken { get; set; }
     }
 
     public class SellToken

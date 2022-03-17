@@ -38,7 +38,7 @@ namespace LoopTradeSharp
             }
         }
 
-        public async Task<string> SubmitNftTradeValidateOrder(string apiKey,NftOrder nftOrder,string eddsaSignature)
+        public async Task<string> SubmitNftTradeValidateOrder(string apiKey,NftOrder nftOrder)
         {
             var request = new RestRequest("api/v3/nft/validateOrder");
             request.AddHeader("x-api-key", apiKey);
@@ -52,7 +52,7 @@ namespace LoopTradeSharp
             request.AddParameter("buyToken.amount", nftOrder.buyToken.amount);
             request.AddParameter("validUntil", nftOrder.validUntil);
             request.AddParameter("maxFeeBips", nftOrder.maxFeeBips);
-            request.AddParameter("eddsaSignature", eddsaSignature);
+            request.AddParameter("eddsaSignature", nftOrder.eddsaSignature);
 
             try
             {
@@ -69,7 +69,7 @@ namespace LoopTradeSharp
             }
         }
 
-        public async Task<string> SubmitNftTrade(string apiKey, NftTrade nftTrade, string makerEddsaSignature, string takerEddsaSignature, string apiSig)
+        public async Task<string> SubmitNftTrade(string apiKey, NftTrade nftTrade, string apiSig)
         {
             var request = new RestRequest("api/v3/nft/trade");
             request.AddHeader("x-api-key", apiKey);
@@ -86,7 +86,7 @@ namespace LoopTradeSharp
             request.AddParameter("maker.buyToken.amount", nftTrade.maker.buyToken.amount);
             request.AddParameter("maker.validUntil", nftTrade.maker.validUntil);
             request.AddParameter("maker.maxFeeBips", nftTrade.maker.maxFeeBips);
-            request.AddParameter("maker.eddsaSignature", makerEddsaSignature);
+            request.AddParameter("maker.eddsaSignature", nftTrade.maker.eddsaSignature);
             request.AddParameter("makerFeeBips", nftTrade.makerFeeBips);
 
             //taker params
@@ -99,7 +99,7 @@ namespace LoopTradeSharp
             request.AddParameter("taker.buyToken.amount", nftTrade.taker.buyToken.amount);
             request.AddParameter("taker.validUntil", nftTrade.taker.validUntil);
             request.AddParameter("taker.maxFeeBips", nftTrade.taker.maxFeeBips);
-            request.AddParameter("taker.eddsaSignature", takerEddsaSignature);
+            request.AddParameter("taker.eddsaSignature", nftTrade.taker.eddsaSignature);
             request.AddParameter("takerFeeBips", nftTrade.takerFeeBips);
 
             try
