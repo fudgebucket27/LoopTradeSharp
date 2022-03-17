@@ -44,14 +44,14 @@ NftOrder nftMakerOrder = new NftOrder()
     },
     buyToken = new BuyToken
     {
-        tokenId = tokenId2,
-        nftData = nftData2,
+        tokenId = tokenId,
+        nftData = nftData,
         amount = "1"
     },
     allOrNone = false,
     fillAmountBOrS = false,
     validUntil = 1700000000,
-    maxFeeBips = 80
+    maxFeeBips = 5
 };
 
 int fillAmountBOrSValue = 0;
@@ -94,8 +94,8 @@ NftOrder nftTakerOrder = new NftOrder()
     storageId = storageId2.orderId,
     sellToken = new SellToken
     {
-        tokenId = tokenId2,
-        nftData = nftData2,
+        tokenId = tokenId,
+        nftData = nftData,
         amount = "1"
     },
     buyToken = new BuyToken
@@ -107,7 +107,7 @@ NftOrder nftTakerOrder = new NftOrder()
     allOrNone = false,
     fillAmountBOrS = true,
     validUntil = 1700000000,
-    maxFeeBips = 80
+    maxFeeBips = 5
 };
 
 int fillAmountBOrSValue2 = 0;
@@ -146,9 +146,9 @@ var nftTakerTradeValidateResponse = await loopringTradeService.SubmitNftTradeVal
 NftTrade nftTrade = new NftTrade
 {
     maker = nftMakerOrder,
-    makerFeeBips = 80,
+    makerFeeBips = 5,
     taker = nftTakerOrder,
-    takerFeeBips = 80
+    takerFeeBips = 5
 };
 
 //Calculate api sig value
@@ -159,7 +159,7 @@ dataToSig.Add("taker", nftTrade.taker);
 dataToSig.Add("takerFeeBips", nftTrade.takerFeeBips);
 var signatureBase = "POST&";
 var parameterString = JsonConvert.SerializeObject(dataToSig);
-signatureBase += Utils.UrlEncodeUpperCase("https://api3.loopring.io/" + "api/v3/nft/trade") + "&";
+signatureBase += Utils.UrlEncodeUpperCase("https://api3.loopring.io/api/v3/nft/trade") + "&";
 signatureBase += Utils.UrlEncodeUpperCase(parameterString);
 var sha256Number = SHA256Helper.CalculateSHA256HashNumber(signatureBase);
 

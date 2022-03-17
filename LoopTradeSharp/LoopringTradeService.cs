@@ -75,6 +75,7 @@ namespace LoopTradeSharp
             request.AddHeader("x-api-key", apiKey);
             request.AddHeader("x-api-sig", apiSig);
             request.AlwaysMultipartFormData = true;
+
             //Maker params
             request.AddParameter("maker.exchange", nftTrade.maker.exchange);
             request.AddParameter("maker.accountId", nftTrade.maker.accountId);
