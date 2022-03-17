@@ -78,9 +78,9 @@ BigInteger makeOrderPoseidonHash = poseidon.CalculatePoseidonHash(poseidonMakerO
 
 //Generate the poseidon eddsa signature
 Eddsa eddsa = new Eddsa(makeOrderPoseidonHash, settings.LoopringPrivateKey);
-string eddsaSignature = eddsa.Sign();
+string makerEddsaSignature = eddsa.Sign();
 
-var nftMakerTradeValidateResponse = await loopringTradeService.SubmitNftTradeValidateOrder(settings.LoopringApiKey, nftMakerOrder, eddsaSignature);
+var nftMakerTradeValidateResponse = await loopringTradeService.SubmitNftTradeValidateOrder(settings.LoopringApiKey, nftMakerOrder, makerEddsaSignature);
 #endregion
 
 #region Create taker order, calculate poseidon hash and submit order validation
@@ -134,18 +134,20 @@ BigInteger takerOrderPoseidonHash = poseidon2.CalculatePoseidonHash(poseidonTake
 
 //Generate the poseidon eddsa signature
 Eddsa eddsa2 = new Eddsa(takerOrderPoseidonHash, settings.LoopringPrivateKey);
-string eddsaSignature2 = eddsa2.Sign();
+string takerEddsaSignature = eddsa2.Sign();
 
-var nftTakerTradeValidateResponse = await loopringTradeService.SubmitNftTradeValidateOrder(settings.LoopringApiKey2, nftTakerOrder, eddsaSignature2);
+var nftTakerTradeValidateResponse = await loopringTradeService.SubmitNftTradeValidateOrder(settings.LoopringApiKey2, nftTakerOrder, takerEddsaSignature);
 #endregion
 
 #region Create trade and submit
 NftTrade nftTrade = new NftTrade
 {
     maker = nftMakerOrder,
-    makeerFeeBips = 80,
+    makerFeeBips = 80,
     taker = nftTakerOrder,
     takerFeeBips = 80
 };
+
+var nftTradeResponse = await loopringTradeService.SubmitNftTrade(settings.LoopringApiKey, nftTrade, makerEddsaSignature, takerEddsaSignature);
 
 #endregion

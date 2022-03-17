@@ -10,5 +10,6 @@ namespace LoopTradeSharp
     {
         Task<StorageId> GetNextStorageId(string apiKey, int accountId, int sellTokenId);
         Task<string> SubmitNftTradeValidateOrder(string apiKey, NftOrder nftOrder, string eddsaSignature);
+        Task<string> SubmitNftTrade(string apiKey, NftTrade nftrade, string makerEddsaSignature, string takerEddsaSignature);
     }
 }

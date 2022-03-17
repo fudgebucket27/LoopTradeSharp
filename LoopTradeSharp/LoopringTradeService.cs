@@ -69,6 +69,51 @@ namespace LoopTradeSharp
             }
         }
 
+        public async Task<string> SubmitNftTrade(string apiKey, NftTrade nftTrade, string makerEddsaSignature, string takerEddsaSignature)
+        {
+            var request = new RestRequest("api/v3/nft/trade");
+            request.AddHeader("x-api-key", apiKey);
+            request.AddHeader("x-api-sig", "BLAH");
+            request.AlwaysMultipartFormData = true;
+            //Maker params
+            request.AddParameter("maker.exchange", nftTrade.maker.exchange);
+            request.AddParameter("maker.accountId", nftTrade.maker.accountId);
+            request.AddParameter("maker.storageId", nftTrade.maker.storageId);
+            request.AddParameter("maker.sellToken.tokenId", nftTrade.maker.sellToken.tokenId);
+            request.AddParameter("maker.sellToken.amount", nftTrade.maker.sellToken.amount);
+            request.AddParameter("maker.buyToken.tokenId", nftTrade.maker.buyToken.tokenId);
+            request.AddParameter("maker.buyToken.amount", nftTrade.maker.buyToken.amount);
+            request.AddParameter("maker.validUntil", nftTrade.maker.validUntil);
+            request.AddParameter("maker.maxFeeBips", nftTrade.maker.maxFeeBips);
+            request.AddParameter("maker.eddsaSignature", makerEddsaSignature);
+            request.AddParameter("makerFeeBips", nftTrade.makerFeeBips);
+
+            //taker params
+            request.AddParameter("taker.exchange", nftTrade.taker.exchange);
+            request.AddParameter("taker.accountId", nftTrade.taker.accountId);
+            request.AddParameter("taker.storageId", nftTrade.taker.storageId);
+            request.AddParameter("taker.sellToken.tokenId", nftTrade.taker.sellToken.tokenId);
+            request.AddParameter("taker.sellToken.amount", nftTrade.taker.sellToken.amount);
+            request.AddParameter("taker.buyToken.tokenId", nftTrade.taker.buyToken.tokenId);
+            request.AddParameter("taker.buyToken.amount", nftTrade.taker.buyToken.amount);
+            request.AddParameter("taker.validUntil", nftTrade.taker.validUntil);
+            request.AddParameter("taker.maxFeeBips", nftTrade.taker.maxFeeBips);
+            request.AddParameter("taker.eddsaSignature", takerEddsaSignature);
+            request.AddParameter("takerFeeBips", nftTrade.takerFeeBips);
+
+            try
+            {
+                var response = await _client.ExecutePostAsync(request);
+                var data = response.Content;
+                Console.WriteLine($"NFT Trade Response: {response.Content}");
+                return data;
+            }
+            catch (HttpRequestException httpException)
+            {
+                Console.WriteLine($"Error with nft trade!: {httpException.Message}");
+                return null;
+            }
+        }
         public void Dispose()
         {
             _client?.Dispose();

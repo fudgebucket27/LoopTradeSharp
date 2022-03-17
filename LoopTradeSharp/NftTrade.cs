@@ -9,7 +9,7 @@ namespace LoopTradeSharp
     public class NftTrade
     {
         public NftOrder maker { get; set; }
-        public int makeerFeeBips { get; set; }
+        public int makerFeeBips { get; set; }
         public NftOrder taker { get; set; } 
         public int takerFeeBips { get; set; }
     }
