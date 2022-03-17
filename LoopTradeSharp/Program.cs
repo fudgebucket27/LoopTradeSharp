@@ -156,7 +156,7 @@ dataToSig.Add("taker", nftTrade.taker);
 dataToSig.Add("takerFeeBips", nftTrade.takerFeeBips);
 var signatureBase = "POST&";
 var parameterString = JsonConvert.SerializeObject(dataToSig);
-signatureBase += Utils.UrlEncodeUpperCase("https://api3.loopring.io/" + "api/v3/storageId") + "&";
+signatureBase += Utils.UrlEncodeUpperCase("https://api3.loopring.io/" + "api/v3/nft/trade") + "&";
 signatureBase += Utils.UrlEncodeUpperCase(parameterString);
 var sha256Number = SHA256Helper.CalculateSHA256HashNumber(signatureBase);
 
