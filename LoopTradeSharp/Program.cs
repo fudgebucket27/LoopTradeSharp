@@ -162,7 +162,6 @@ var parameterString = JsonConvert.SerializeObject(dataToSig);
 signatureBase += Utils.UrlEncodeUpperCase("https://api3.loopring.io/api/v3/nft/trade") + "&";
 signatureBase += Utils.UrlEncodeUpperCase(parameterString);
 var sha256Number = SHA256Helper.CalculateSHA256HashNumber(signatureBase);
-
 var sha256Signer = new Eddsa(sha256Number, settings.LoopringPrivateKey);
 var sha256Signed = sha256Signer.Sign();
 
