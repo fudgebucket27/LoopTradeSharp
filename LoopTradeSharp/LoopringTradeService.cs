@@ -69,11 +69,11 @@ namespace LoopTradeSharp
             }
         }
 
-        public async Task<string> SubmitNftTrade(string apiKey, NftTrade nftTrade, string makerEddsaSignature, string takerEddsaSignature)
+        public async Task<string> SubmitNftTrade(string apiKey, NftTrade nftTrade, string makerEddsaSignature, string takerEddsaSignature, string apiSig)
         {
             var request = new RestRequest("api/v3/nft/trade");
             request.AddHeader("x-api-key", apiKey);
-            request.AddHeader("x-api-sig", "BLAH");
+            request.AddHeader("x-api-sig", apiSig);
             request.AlwaysMultipartFormData = true;
             //Maker params
             request.AddParameter("maker.exchange", nftTrade.maker.exchange);

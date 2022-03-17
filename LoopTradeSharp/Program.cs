@@ -139,7 +139,7 @@ string takerEddsaSignature = eddsa2.Sign();
 var nftTakerTradeValidateResponse = await loopringTradeService.SubmitNftTradeValidateOrder(settings.LoopringApiKey2, nftTakerOrder, takerEddsaSignature);
 #endregion
 
-#region Create trade and submit
+#region Create trade, calculate api sig value and submit trade
 NftTrade nftTrade = new NftTrade
 {
     maker = nftMakerOrder,
@@ -148,6 +148,21 @@ NftTrade nftTrade = new NftTrade
     takerFeeBips = 80
 };
 
-var nftTradeResponse = await loopringTradeService.SubmitNftTrade(settings.LoopringApiKey, nftTrade, makerEddsaSignature, takerEddsaSignature);
+//Calculate api sig value
+Dictionary<string, object> dataToSig = new Dictionary<string, object>();
+dataToSig.Add("maker", nftTrade.maker);
+dataToSig.Add("makerFeeBips", nftTrade.makerFeeBips);
+dataToSig.Add("taker", nftTrade.taker);
+dataToSig.Add("takerFeeBips", nftTrade.takerFeeBips);
+var signatureBase = "POST&";
+var parameterString = JsonConvert.SerializeObject(dataToSig);
+signatureBase += Utils.UrlEncodeUpperCase("https://api3.loopring.io/" + "api/v3/storageId") + "&";
+signatureBase += Utils.UrlEncodeUpperCase(parameterString);
+var sha256Number = SHA256Helper.CalculateSHA256HashNumber(signatureBase);
+
+var sha256Signer = new Eddsa(sha256Number, settings.LoopringPrivateKey);
+var sha256Signed = sha256Signer.Sign();
+
+var nftTradeResponse = await loopringTradeService.SubmitNftTrade(settings.LoopringApiKey, nftTrade, makerEddsaSignature, takerEddsaSignature, sha256Signed);
 
 #endregion
