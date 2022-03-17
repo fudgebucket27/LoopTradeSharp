@@ -58,10 +58,8 @@ namespace LoopTradeSharp
             {
                 var response = await _client.ExecutePostAsync(request);
                 var data = response.Content;
-                if (!response.IsSuccessful)
-                {
-                    Console.WriteLine($"Error validating nft order: {response.Content}");
-                }
+                Console.WriteLine($"NFT Order Validate Response: {response.Content}");
+
                 return data;
             }
             catch (HttpRequestException httpException)

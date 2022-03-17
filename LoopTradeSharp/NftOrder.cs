@@ -11,8 +11,8 @@ namespace LoopTradeSharp
         public string exchange { get; set; }
         public int accountId { get; set; }
         public int storageId { get; set; }
-        public SellToken? sellToken { get; set; }
-        public BuyToken? buyToken { get; set; }
+        public SellToken sellToken { get; set; }
+        public BuyToken buyToken { get; set; }
         public bool allOrNone { get; set; }
         public bool fillAmountBOrS { get; set; }
         public long validUntil { get; set; }
