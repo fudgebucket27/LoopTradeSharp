@@ -12,6 +12,10 @@ namespace LoopTradeSharp
         public string LoopringPrivateKey { get; set; }
         public string LoopringAddress { get; set; }
         public int LoopringAccountId { get; set; }
+        public string LoopringApiKey2 { get; set; }
+        public string LoopringPrivateKey2 { get; set; }
+        public string LoopringAddress2 { get; set; }
+        public int LoopringAccountId2 { get; set; }
         public string Exchange { get; set; }
     }
 }
