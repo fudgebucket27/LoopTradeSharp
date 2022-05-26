@@ -46,7 +46,7 @@ NftOrder nftMakerOrder = new NftOrder()
     {
         tokenId = nftTokenId2,
         nftData = nftData2,
-        amount = "1000"
+        amount = "1"
     },
     allOrNone = false,
     fillAmountBOrS = false,
