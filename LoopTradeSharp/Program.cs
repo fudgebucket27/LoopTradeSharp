@@ -13,18 +13,18 @@ IConfiguration config = new ConfigurationBuilder()
 
 Settings settings = config.GetRequiredSection("Settings").Get<Settings>();
 
-int tokenId = 33032; //tokenId to trade
-string nftData = "0x013a4a886f3de035bd82666c043abc90d1ce1b353463b32f3aa3a20aca21ec59"; //nftData to trade
+int nftTokenId = 33769; //tokenId to trade
+string nftData = "0x19b1d363f3cc86b43f01813bfd4daa9acc1afd4a81f0d50a4b780bf005d074c5"; //nftData to trade
 
-int tokenId2 = 32794; //tokenId to trade
-string nftData2 = "0x00fed22012e524652211a522836e2e872066da7405192321088615bc116550ef"; //nftData to trade
+int nftTokenId2 = 32963; //tokenId to trade
+string nftData2 = "0x105c88ac80d8edb890f4342647b71d075710a23d15be40f4185831dc631c2119"; //nftData to trade
 
 #endregion
 
 #region Get storage ids
 ILoopringTradeService loopringTradeService = new LoopringTradeService();
 //Getting the storage id
-var storageId = await loopringTradeService.GetNextStorageId(settings.LoopringApiKey, settings.LoopringAccountId, 1);
+var storageId = await loopringTradeService.GetNextStorageId(settings.LoopringApiKey, settings.LoopringAccountId, nftTokenId);
 var storageId2 = await loopringTradeService.GetNextStorageId(settings.LoopringApiKey2, settings.LoopringAccountId2, 1);
 Console.WriteLine($"Storage id: {JsonConvert.SerializeObject(storageId, Formatting.Indented)}");
 Console.WriteLine($"Storage id2: {JsonConvert.SerializeObject(storageId2, Formatting.Indented)}");
@@ -38,24 +38,24 @@ NftOrder nftMakerOrder = new NftOrder()
     storageId = storageId.orderId,
     sellToken = new SellToken
     {
-        tokenId = tokenId,
+        tokenId = nftTokenId,
         nftData = nftData,
         amount = "1"
     },
     buyToken = new BuyToken
     {
-        tokenId = tokenId,
-        nftData = nftData,
-        amount = "1"
+        tokenId = nftTokenId2,
+        nftData = nftData2,
+        amount = "1000"
     },
     allOrNone = false,
     fillAmountBOrS = false,
     validUntil = 1700000000,
-    maxFeeBips = 5
+    maxFeeBips = 1000
 };
 
 int fillAmountBOrSValue = 0;
-if(nftMakerOrder.fillAmountBOrS == true)
+if (nftMakerOrder.fillAmountBOrS == true)
 {
     fillAmountBOrSValue = 1;
 }
@@ -66,7 +66,7 @@ BigInteger[] poseidonMakerOrderInputs =
     (BigInteger) nftMakerOrder.storageId,
     (BigInteger) nftMakerOrder.accountId,
     (BigInteger) nftMakerOrder.sellToken.tokenId,
-    !String.IsNullOrEmpty(nftMakerOrder.buyToken.nftData) ? Utils.ParseHexUnsigned(nftMakerOrder.buyToken.nftData) : (BigInteger) nftMakerOrder.buyToken.tokenId ,
+    !String.IsNullOrEmpty(nftMakerOrder.buyToken.nftData) ? Utils.ParseHexUnsigned(nftMakerOrder.buyToken.nftData) : (BigInteger) nftMakerOrder.buyToken.tokenId,
     !String.IsNullOrEmpty(nftMakerOrder.sellToken.amount) ? BigInteger.Parse(nftMakerOrder.sellToken.amount) : (BigInteger) 0,
     !String.IsNullOrEmpty(nftMakerOrder.buyToken.amount) ? BigInteger.Parse(nftMakerOrder.buyToken.amount) : (BigInteger) 0,
     (BigInteger) nftMakerOrder.validUntil,
@@ -94,20 +94,19 @@ NftOrder nftTakerOrder = new NftOrder()
     storageId = storageId2.orderId,
     sellToken = new SellToken
     {
-        tokenId = tokenId,
-        nftData = nftData,
+        tokenId = nftTokenId2,
         amount = "1"
     },
     buyToken = new BuyToken
     {
-        tokenId = tokenId,
+        tokenId = nftTokenId,
         nftData = nftData,
         amount = "1"
     },
     allOrNone = false,
     fillAmountBOrS = true,
     validUntil = 1700000000,
-    maxFeeBips = 5
+    maxFeeBips = 100
 };
 
 int fillAmountBOrSValue2 = 0;
@@ -136,7 +135,7 @@ Poseidon poseidon2 = new Poseidon(12, 6, 53, "poseidon", 5, _securityTarget: 128
 BigInteger takerOrderPoseidonHash = poseidon2.CalculatePoseidonHash(poseidonTakerOrderInputs);
 
 //Generate the poseidon eddsa signature
-Eddsa eddsa2 = new Eddsa(takerOrderPoseidonHash, settings.LoopringPrivateKey);
+Eddsa eddsa2 = new Eddsa(takerOrderPoseidonHash, settings.LoopringPrivateKey2);
 string takerEddsaSignature = eddsa2.Sign();
 
 var nftTakerTradeValidateResponse = await loopringTradeService.SubmitNftTradeValidateOrder(settings.LoopringApiKey2, nftTakerOrder, takerEddsaSignature);
@@ -146,9 +145,9 @@ var nftTakerTradeValidateResponse = await loopringTradeService.SubmitNftTradeVal
 NftTrade nftTrade = new NftTrade
 {
     maker = nftMakerOrder,
-    makerFeeBips = 5,
+    makerFeeBips = 1000,
     taker = nftTakerOrder,
-    takerFeeBips = 5
+    takerFeeBips = 100
 };
 
 //Calculate api sig value

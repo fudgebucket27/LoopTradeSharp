@@ -23,7 +23,7 @@ namespace LoopTradeSharp
     public class SellToken
     {
         public int tokenId { get; set; }
-        public string nftData { get; set; }
+        public string? nftData { get; set; }
         public string amount { get; set; }
     }
 
@@ -31,6 +31,6 @@ namespace LoopTradeSharp
     {
         public int tokenId { get; set; }
         public string amount { get; set; }
-        public string nftData { get; set; }
+        public string? nftData { get; set; }
     }
 }
