@@ -15,8 +15,8 @@ IConfiguration config = new ConfigurationBuilder()
 
 Settings settings = config.GetRequiredSection("Settings").Get<Settings>();
 
-int nftTokenId = 33769; //nftTokenId to trade
-string nftData = "0x19b1d363f3cc86b43f01813bfd4daa9acc1afd4a81f0d50a4b780bf005d074c5"; //nftData to trade
+int nftTokenId = 33742; //nftTokenId to trade
+string nftData = "0x0846539b0520a253996e82977359d4ae8791d1e1f5a7412aa3c035fd0fa443fb"; //nftData to trade
 
 
 #endregion
@@ -167,6 +167,6 @@ var sha256Number = SHA256Helper.CalculateSHA256HashNumber(signatureBase);
 var sha256Signer = new Eddsa(sha256Number, settings.LoopringPrivateKey3);
 var sha256Signed = sha256Signer.Sign();
 
-var nftTradeResponse = await loopringTradeService.SubmitNftTrade(settings.LoopringApiKey3, nftTrade, makerEddsaSignature, takerEddsaSignature, sha256Signed);
+var nftTradeResponse = await loopringTradeService.SubmitNftTrade(settings.LoopringApiKey3, nftTrade, sha256Signed);
 
 #endregion
