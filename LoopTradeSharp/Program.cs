@@ -15,11 +15,9 @@ IConfiguration config = new ConfigurationBuilder()
 
 Settings settings = config.GetRequiredSection("Settings").Get<Settings>();
 
-int nftTokenId = 33769; //tokenId to trade
+int nftTokenId = 33769; //nftTokenId to trade
 string nftData = "0x19b1d363f3cc86b43f01813bfd4daa9acc1afd4a81f0d50a4b780bf005d074c5"; //nftData to trade
 
-int nftTokenId2 = 32963; //tokenId to trade
-string nftData2 = "0x105c88ac80d8edb890f4342647b71d075710a23d15be40f4185831dc631c2119"; //nftData to trade
 
 #endregion
 
