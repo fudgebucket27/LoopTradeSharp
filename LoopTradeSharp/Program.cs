@@ -166,6 +166,6 @@ var sha256Number = SHA256Helper.CalculateSHA256HashNumber(signatureBase);
 var sha256Signer = new Eddsa(sha256Number, settings.LoopringPrivateKey3);
 var sha256Signed = sha256Signer.Sign();
 
-var nftTradeResponse = await loopringTradeService.SubmitNftTrade(settings.LoopringApiKey, nftTrade, makerEddsaSignature, takerEddsaSignature, sha256Signed);
+var nftTradeResponse = await loopringTradeService.SubmitNftTrade(settings.LoopringApiKey3, nftTrade, makerEddsaSignature, takerEddsaSignature, sha256Signed);
 
 #endregion
