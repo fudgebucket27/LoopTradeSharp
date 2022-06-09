@@ -82,6 +82,7 @@ BigInteger makeOrderPoseidonHash = poseidon.CalculatePoseidonHash(poseidonMakerO
 //Generate the poseidon eddsa signature
 Eddsa eddsa = new Eddsa(makeOrderPoseidonHash, settings.LoopringPrivateKey);
 string makerEddsaSignature = eddsa.Sign();
+nftMakerOrder.eddsaSignature = makerEddsaSignature;
 
 var nftMakerTradeValidateResponse = await loopringTradeService.SubmitNftTradeValidateOrder(settings.LoopringApiKey, nftMakerOrder, makerEddsaSignature);
 #endregion
@@ -137,6 +138,7 @@ BigInteger takerOrderPoseidonHash = poseidon2.CalculatePoseidonHash(poseidonTake
 //Generate the poseidon eddsa signature
 Eddsa eddsa2 = new Eddsa(takerOrderPoseidonHash, settings.LoopringPrivateKey2);
 string takerEddsaSignature = eddsa2.Sign();
+nftTakerOrder.eddsaSignature = takerEddsaSignature;
 
 var nftTakerTradeValidateResponse = await loopringTradeService.SubmitNftTradeValidateOrder(settings.LoopringApiKey2, nftTakerOrder, takerEddsaSignature);
 #endregion

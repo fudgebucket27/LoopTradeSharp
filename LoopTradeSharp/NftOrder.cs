@@ -17,7 +17,7 @@ namespace LoopTradeSharp
         public bool fillAmountBOrS { get; set; }
         public long validUntil { get; set; }
         public int maxFeeBips { get; set; }
-        public string taker { get; set; }
+        public string eddsaSignature { get; set; }
     }
 
     public class SellToken
