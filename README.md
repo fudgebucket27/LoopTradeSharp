@@ -28,3 +28,44 @@ You will need to create an appsettings.json file in the directory with the setti
 ```
 
 Edit the nftTokenId and nftData in the code to the specific NFT in the maker's account.
+
+
+A successful NFT Trade returns a response like below:
+
+```json
+{
+  "makerFills": {
+    "orderHash": "0x2833cbdf9214273ab23458ec5b3ac4db1811fbfdaf49b72f8c7d0c6266941b7c",
+    "sellFilled": {
+      "tokenId": 33769,
+      "nftData": "0x19b1d363f3cc86b43f01813bfd4daa9acc1afd4a81f0d50a4b780bf005d074c5",
+      "amount": "1"
+    },
+    "buyFilled": {
+      "tokenId": 1,
+      "amount": "10000000000000"
+    },
+    "fee": {
+      "tokenId": 1,
+      "amount": "1000000000000"
+    }
+  },
+  "takerFills": {
+    "orderHash": "0x2657a8867af935eb9f13f19236f5ff4c25d811ca3a4107a197a7aae61fe313d6",
+    "sellFilled": {
+      "tokenId": 1,
+      "amount": "10000000000000"
+    },
+    "buyFilled": {
+      "tokenId": 33022,
+      "nftData": "0x19b1d363f3cc86b43f01813bfd4daa9acc1afd4a81f0d50a4b780bf005d074c5",
+      "amount": "1"
+    },
+    "fee": {
+      "tokenId": 1,
+      "amount": "100000000000"
+    }
+  },
+  "tradeHash": "0x0bb745f5ddad10e56465235b265efde37fcc598e929a1e9b76684d50388d3a79"
+}
+```
