@@ -1,7 +1,9 @@
 ﻿
+using JsonFlatten;
 using LoopTradeSharp;
 using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using PoseidonSharp;
 using System.Numerics;
 
@@ -44,9 +46,8 @@ NftOrder nftMakerOrder = new NftOrder()
     },
     buyToken = new BuyToken
     {
-        tokenId = nftTokenId2,
-        nftData = nftData2,
-        amount = "1"
+        tokenId = 1,
+        amount = "10000000000000"
     },
     allOrNone = false,
     fillAmountBOrS = false,
@@ -95,8 +96,8 @@ NftOrder nftTakerOrder = new NftOrder()
     storageId = storageId2.orderId,
     sellToken = new SellToken
     {
-        tokenId = nftTokenId2,
-        amount = "1"
+        tokenId = 1,
+        amount = "10000000000000"
     },
     buyToken = new BuyToken
     {
@@ -159,7 +160,9 @@ dataToSig.Add("makerFeeBips", nftTrade.makerFeeBips);
 dataToSig.Add("taker", nftTrade.taker);
 dataToSig.Add("takerFeeBips", nftTrade.takerFeeBips);
 var signatureBase = "POST&";
-var parameterString = JsonConvert.SerializeObject(dataToSig);
+var jObject = JObject.Parse(JsonConvert.SerializeObject(dataToSig));
+var jObjectFlattened = jObject.Flatten();
+var parameterString = JsonConvert.SerializeObject(jObjectFlattened);
 signatureBase += Utils.UrlEncodeUpperCase("https://api3.loopring.io/api/v3/nft/trade") + "&";
 signatureBase += Utils.UrlEncodeUpperCase(parameterString);
 var sha256Number = SHA256Helper.CalculateSHA256HashNumber(signatureBase);
