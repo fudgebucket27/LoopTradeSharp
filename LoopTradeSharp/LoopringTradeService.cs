@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using JsonFlatten;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using RestSharp;
 using System;
 using System.Collections.Generic;
@@ -71,9 +73,16 @@ namespace LoopTradeSharp
 
         public async Task<string> SubmitNftTrade(string apiKey, NftTrade nftTrade, string makerEddsaSignature, string takerEddsaSignature, string apiSig)
         {
-            var request = new RestRequest("api/v3/nft/trade");
+            var request = new RestRequest("/api/v3/nft/trade", Method.Post);
             request.AddHeader("x-api-key", apiKey);
             request.AddHeader("x-api-sig", apiSig);
+            request.AddHeader("Accept", "application/json");
+            var jObject = JObject.Parse(JsonConvert.SerializeObject(nftTrade));
+            var jObjectFlattened = jObject.Flatten();
+            var jObjectFlattenedString = JsonConvert.SerializeObject(jObjectFlattened);
+            request.AddParameter("application/json", jObjectFlattenedString, ParameterType.RequestBody);
+
+            /*
             request.AlwaysMultipartFormData = true;
 
             //Maker params
@@ -101,10 +110,11 @@ namespace LoopTradeSharp
             request.AddParameter("taker.maxFeeBips", nftTrade.taker.maxFeeBips);
             request.AddParameter("taker.eddsaSignature", takerEddsaSignature);
             request.AddParameter("takerFeeBips", nftTrade.takerFeeBips);
+            */
 
             try
             {
-                var response = await _client.ExecutePostAsync(request);
+                var response = await _client.ExecuteAsync(request);
                 var data = response.Content;
                 Console.WriteLine($"NFT Trade Response: {response.Content}");
                 return data;
