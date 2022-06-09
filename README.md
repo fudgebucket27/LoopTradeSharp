@@ -1,7 +1,7 @@
 # LoopTradeSharp
 NFT Trading via the Loopring API in C#. This is more of a demo on how to make a valid trade between two accounts. You will need three seperate Loopring Accounts to use this demo. You will need a maker, taker and settler account.
 
-You need an appsettings.json file in the directory with the setting "Copy to Output Directory" set to "Copy Always" like below. 
+You will need to create an appsettings.json file in the directory with the setting "Copy to Output Directory" set to "Copy Always" like below. 
 
 ```json
 {
