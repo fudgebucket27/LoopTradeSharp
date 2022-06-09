@@ -19,7 +19,7 @@ You need an appsettings.json file in the directory with the setting "Copy to Out
 
     "LoopringApiKey3": "B2pblahblah", //The settler api key
     "LoopringPrivateKey3": "0x36blah", //The settler private key
-    "LoopringAddress3": "0x99nblaha, //The settler address
+    "LoopringAddress3": "0x99nblaha", //The settler address
     "LoopringAccountId3": 136736, //The settler account id
     
     "Exchange": "0x0BABA1Ad5bE3a5C0a66E7ac838a129Bf948f1eA4" //Loopring Exchange address
