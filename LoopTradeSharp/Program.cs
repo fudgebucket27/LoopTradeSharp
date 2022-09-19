@@ -15,8 +15,8 @@ IConfiguration config = new ConfigurationBuilder()
 
 Settings settings = config.GetRequiredSection("Settings").Get<Settings>();
 
-int nftTokenId = 33518; //nftTokenId to trade
-string nftData = "0x143c91ad4351a4a05ffb220495d1bf4fcf399f03309d0a4429080768fc7567df"; //nftData to trade
+int nftTokenId = 34620; //nftTokenId to trade
+string nftData = "0x080f2ad9b13d9673cfea2931723d2662c708e48c43f5b24ef0f2abe19a465af2"; //nftData to trade
 
 
 #endregion
@@ -45,12 +45,12 @@ NftOrder nftMakerOrder = new NftOrder()
     buyToken = new BuyToken
     {
         tokenId = 1,
-        amount = "10000000000000"
+        amount = "100000000000000000000"
     },
     allOrNone = false,
     fillAmountBOrS = false,
     validUntil = 1700000000,
-    maxFeeBips = 1000
+    maxFeeBips = 0
 };
 
 int fillAmountBOrSValue = 0;
@@ -95,7 +95,7 @@ NftOrder nftTakerOrder = new NftOrder()
     sellToken = new SellToken
     {
         tokenId = 1,
-        amount = "10000000000000"
+        amount = "100000000000000000000"
     },
     buyToken = new BuyToken
     {
@@ -146,7 +146,7 @@ var nftTakerTradeValidateResponse = await loopringTradeService.SubmitNftTradeVal
 NftTrade nftTrade = new NftTrade
 {
     maker = nftMakerOrder,
-    makerFeeBips = 1000,
+    makerFeeBips = 0,
     taker = nftTakerOrder,
     takerFeeBips = 100
 };
@@ -168,5 +168,7 @@ var sha256Signer = new Eddsa(sha256Number, settings.LoopringPrivateKey2);
 var sha256Signed = sha256Signer.Sign();
 
 var nftTradeResponse = await loopringTradeService.SubmitNftTrade(settings.LoopringApiKey2, nftTrade, sha256Signed);
+
+var response = JsonConvert.DeserializeObject(nftTradeResponse);
 
 #endregion
