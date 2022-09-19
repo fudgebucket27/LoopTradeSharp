@@ -168,6 +168,7 @@ while (true)
         var nftTradeResponse = await loopringTradeService.SubmitNftTrade(settings.LoopringApiKey2, nftTrade, sha256Signed);
 
         var response = JsonConvert.DeserializeObject<NftTradeResponse>(nftTradeResponse);
+       
         nftTokenId = response.takerFills.buyFilled.tokenId;
         nftData = response.takerFills.buyFilled.nftData;
     }
